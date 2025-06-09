@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>se.uu.ub.cora</groupId>
+    <artifactId>cora-parent-docker</artifactId>
+    <version>1.1.0</version>
+  </parent>
+
+  <artifactId>alvin-docker-client</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Alvin client docker</name>
+
+  <properties>
+    <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+    <alvin-client.version>1.0.0-SNAPSHOT</alvin-client.version>
+    <docker.build.dir>${project.build.directory}/unpacked</docker.build.dir>
+  </properties>
+
+  <scm>
+    <connection>scm:git:https://github.com/lsu-ub-uu/alvin-docker-client.git</connection>
+  <developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-docker-client.git</developerConnection>
+    <url>https://github.com/lsu-ub-uu/alvin-docker-client.git</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>se.uu.ub.cora</groupId>
+      <artifactId>alvin-client</artifactId>
+      <version>${alvin-client.version}</version>
+      <type>zip</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>unpack-alvin-client-zip</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>se.uu.ub.cora</groupId>
+                  <artifactId>alvin-client</artifactId>
+                  <version>${alvin-client.version}</version>
+                  <type>zip</type>
+                </artifactItem>
+              </artifactItems>
+              <includes>**/*</includes>
+              <outputDirectory>${docker.build.dir}</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>copy-dockerfile</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${docker.build.dir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/docker</directory>
+                  <includes>
+                    <include>Dockerfile</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>build-docker-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>docker</executable>
+              <arguments>
+                <argument>build</argument>
+                <argument>--build-arg</argument>
+                <argument>DEBUG=true</argument>
+                <argument>-t</argument>
+                <argument>${project.artifactId}:${project.version}</argument>
+                <argument>-f</argument>
+                <argument>${docker.build.dir}/Dockerfile</argument>
+                <argument>${docker.build.dir}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
