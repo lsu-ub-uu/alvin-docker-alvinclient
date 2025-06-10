@@ -24,7 +24,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/lsu-ub-uu/alvin-docker-client.git</connection>
-  <developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-docker-client.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-docker-client.git</developerConnection>
     <url>https://github.com/lsu-ub-uu/alvin-docker-client.git</url>
   </scm>
 
@@ -99,24 +99,24 @@
         <version>3.1.0</version>
         <executions>
           <execution>
-								<id>docker-build</id>
-								<phase>install</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>docker</executable>
-									<workingDirectory>${outputDirectory}</workingDirectory>
-									<arguments>
-										<argument>build</argument>
-                    <argument>--build-arg</argument>
-                  <argument>DEBUG=true</argument>
-										<argument>-t</argument>
-										<argument>${dockerNameAndVersion}</argument>
-                    <argument>${docker.build.dir}</argument>
-									</arguments>
-								</configuration>
-							</execution>
+            <id>docker-build</id>
+            <phase>install</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>docker</executable>
+              <workingDirectory>${outputDirectory}</workingDirectory>
+              <arguments>
+                <argument>build</argument>
+                <argument>--build-arg</argument>
+                <argument>DEBUG=true</argument>
+                <argument>-t</argument>
+                <argument>${dockerNameAndVersion}</argument>
+                <argument>${docker.build.dir}</argument>
+              </arguments>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
