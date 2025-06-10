@@ -33,7 +33,7 @@
       <groupId>se.uu.ub.cora</groupId>
       <artifactId>alvin-client</artifactId>
       <version>${alvin-client.version}</version>
-      <type>zip</type>
+      <type>jar</type>
     </dependency>
   </dependencies>
 
@@ -56,7 +56,7 @@
                   <groupId>se.uu.ub.cora</groupId>
                   <artifactId>alvin-client</artifactId>
                   <version>${alvin-client.version}</version>
-                  <type>zip</type>
+                  <type>jar</type>
                 </artifactItem>
               </artifactItems>
               <includes>**/*</includes>
