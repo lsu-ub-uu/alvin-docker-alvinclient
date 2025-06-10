@@ -7,5 +7,5 @@
 ## Start docker with /vol/static as a docker volume
 
 ```
-docker run --name alvin-client -v static-vol:/vol/static --env-file env -p 8000:8000 alvin-docker-client:1.0.0-SNAPSHOT
+docker run --name alvin-client -v static-vol:/vol/static --env-file env -p 8000:8000 alvin-docker-client:1.0-SNAPSHOT
 ```
