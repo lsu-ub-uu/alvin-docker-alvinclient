@@ -1,5 +1,5 @@
 # Use a lightweight Python base image
-FROM python:3.13-slim
+FROM python:3.11-slim
 
 # Install Apache and mod_wsgi
 RUN apt-get update && \
@@ -10,6 +10,7 @@ RUN apt-get update && \
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ARG DEBUG
 ENV DEBUG=${DEBUG}
 
 # Create and activate a virtual environment
@@ -22,11 +23,12 @@ WORKDIR /alvin-client
 # Copy project files
 COPY . /alvin-client
 
-# Install Python dependencies
-RUN pip install --upgrade pip && pip install -r requirements.txt
+# Install dependencies inside virtualenv
+RUN /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install -r requirements.txt
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# Collect static files inside virtualenv
+RUN /venv/bin/python manage.py collectstatic --noinput
 
 # Copy Apache config
 COPY apache/django.conf /etc/apache2/sites-available/000-default.conf
