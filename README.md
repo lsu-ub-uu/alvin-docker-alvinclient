@@ -7,5 +7,16 @@
 ## Start docker with /vol/static as a docker volume
 
 ```
-docker run --name alvin-client -v static-vol:/vol/static --env-file env -p 8000:8000 alvin-docker-client:1.0-SNAPSHOT
+docker run --name alvin-client --env-file env -p 8000:80 alvin-docker-client:1.0-SNAPSHOT
+```
+
+## Variables used, values are examples
+```
+DEBUG=false
+STATIC_ROOT=/vol/static
+ALLOWED_HOSTS=127.0.0.1,localhost
+CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80
+CORS_ALLOWED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80
+SECRET_KEY=somesecretkey
+API_HOST=https://cora.alvin-portal.org
 ```
