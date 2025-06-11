@@ -39,6 +39,8 @@
     <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
     <alvin-client.version>1.0-SNAPSHOT</alvin-client.version>
     <docker.build.dir>${project.build.directory}/unpacked</docker.build.dir>
+    <!-- Override property so docker-build profile activates in this module -->
+	<docker.build.activate>true</docker.build.activate>
   </properties>
 
   <scm>
@@ -104,6 +106,7 @@
                   <directory>${basedir}/docker</directory>
                   <includes>
                     <include>Dockerfile</include>
+                    <include>apache/*.*</include>
                   </includes>
                 </resource>
               </resources>
@@ -115,8 +118,8 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
+        <version>${exec-maven-plugin.version}</version>
+		<executions>
           <execution>
             <id>docker-build</id>
             <phase>install</phase>

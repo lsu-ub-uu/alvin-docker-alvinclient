@@ -1,21 +1,41 @@
-FROM python:3.10.4
+# Use a lightweight Python base image
+FROM python:3.13-slim
 
-RUN apt-get update && apt-get install -y libxslt-dev libxml2 && rm -rf /var/lib/apt/lists/*
+# Install Apache and mod_wsgi
+RUN apt-get update && \
+    apt-get install -y apache2 libapache2-mod-wsgi-py3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /alvin-client
-
-COPY . .
-
-ARG DEBUG
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV DEBUG=${DEBUG}
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Create and activate a virtual environment
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
+# Create app directory
+WORKDIR /alvin-client
+
+# Copy project files
+COPY . /alvin-client
+
+# Install Python dependencies
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
-ENV GUNICORN_WORKERS=4
-ENV GUNICORN_BIND=0.0.0.0:8000
-ENV GUNICORN_LOG_LEVEL=debug
+# Copy Apache config
+COPY apache/django.conf /etc/apache2/sites-available/000-default.conf
 
-EXPOSE 8000
-CMD ["sh", "-c", "gunicorn -w $GUNICORN_WORKERS -k uvicorn.workers.UvicornWorker alvin_django.asgi:application --bind $GUNICORN_BIND --log-level GUNICORN_LOG_LEVEL"]
+# Enable mod_wsgi
+RUN a2enmod wsgi
+
+# Expose HTTP port
+EXPOSE 80
+
+# Run Apache in the foreground
+CMD ["apache2ctl", "-D", "FOREGROUND"]
