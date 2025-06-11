@@ -4,10 +4,10 @@
 * The env file contains variables used by the application
 * Static files are collected at ***/vol/static*** by default, can possibly be used as a docker volume and used by a static file server (nginx etc) to serve these files
 
-## Start docker with /vol/static as a docker volume
+## Start docker
 
 ```
-docker run --name alvin-client --env-file env -p 8000:80 alvin-docker-client:1.0-SNAPSHOT
+docker run --name alvin-client -e DEBUG=false -e SECRET_KEY=somethingSecret -e ALLOWED_HOSTS=127.0.0.1,localhost -e CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80 -e CORS_ALLOWED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80 -e API_HOST=https://cora.alvin-portal.org -p 8000:80 alvin-docker-client:1.0-SNAPSHOT
 ```
 
 ## Variables used, values are examples
