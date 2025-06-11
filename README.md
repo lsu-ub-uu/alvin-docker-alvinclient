@@ -1,8 +1,7 @@
 # Alvin docker client
 
 ## Info
-* The env file contains variables used by the application
-* Static files are collected at ***/vol/static*** by default, can possibly be used as a docker volume and used by a static file server (nginx etc) to serve these files
+* Static files are collected at ***/vol/static*** by default
 
 ## Start docker
 
