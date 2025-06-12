@@ -17,7 +17,7 @@ docker run --name alvin-client -e DEBUG=false -e SECRET_KEY=somegeneratedsecretk
 ## Variables used, values are examples
 ```
 DEBUG=false
-STATIC_ROOT=/vol/static
+STATIC_ROOT=/vol/static # This is the default already used by the client, but can be changed if needed.
 ALLOWED_HOSTS=127.0.0.1,localhost,172.17.0.2
 CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80
 CORS_ALLOWED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000,http://localhost:80
