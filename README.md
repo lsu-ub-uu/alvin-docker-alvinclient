@@ -3,7 +3,7 @@
 ## Info
 * Static files are collected at ***/vol/static*** by default
 * Secret key
-  * The secret key is crucial and handles things such as session signing, CSRF token signing, custom/third-party cryptographic signing etc.
+  * The secret key is crucial and used for things such as session signing, CSRF token signing, custom/third-party cryptographic signing etc.
   * To generate a secret key (*the recommended way*) you can run the following command:
     * ```python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"```
 
