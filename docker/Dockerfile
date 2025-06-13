@@ -39,5 +39,7 @@ RUN a2enmod wsgi
 # Expose HTTP port
 EXPOSE 80
 
-# Run Apache in the foreground
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+# Copy entrypoint script which handles env variable checks
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
