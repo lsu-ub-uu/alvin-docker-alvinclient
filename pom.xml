@@ -36,7 +36,7 @@
   <properties>
     <exec-maven-plugin.version>3.5.1</exec-maven-plugin.version>
     <alvin-client.version>1.2.0</alvin-client.version>
-    <docker.build.dir>${project.build.directory}/unpacked</docker.build.dir>
+<!--    <docker.build.dir>${project.build.directory}/unpacked</docker.build.dir>-->
     <!-- Override property so docker-build profile activates in this module -->
 	<docker.build.activate>true</docker.build.activate>
   </properties>
@@ -80,7 +80,7 @@
                 </artifactItem>
               </artifactItems>
               <includes>**/*</includes>
-              <outputDirectory>${docker.build.dir}</outputDirectory>
+              <outputDirectory>${outputDirectory}</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
@@ -88,30 +88,30 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-dockerfile</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${docker.build.dir}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/docker</directory>
-                  <includes>
-                    <include>Dockerfile</include>
-                    <include>apache/*.*</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <artifactId>maven-resources-plugin</artifactId>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>copy-dockerfile</id>-->
+<!--            <phase>generate-resources</phase>-->
+<!--            <goals>-->
+<!--              <goal>copy-resources</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <outputDirectory>${docker.build.dir}</outputDirectory>-->
+<!--              <resources>-->
+<!--                <resource>-->
+<!--                  <directory>${basedir}/docker</directory>-->
+<!--                  <includes>-->
+<!--                    <include>Dockerfile</include>-->
+<!--                    <include>apache/*.*</include>-->
+<!--                  </includes>-->
+<!--                </resource>-->
+<!--              </resources>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -132,7 +132,7 @@
                 <argument>DEBUG=true</argument>
                 <argument>-t</argument>
                 <argument>${dockerNameAndVersion}</argument>
-                <argument>${docker.build.dir}</argument>
+                <argument>${outputDirectory}</argument>
               </arguments>
             </configuration>
           </execution>
