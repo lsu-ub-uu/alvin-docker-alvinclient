@@ -21,7 +21,7 @@ ENV PATH="/venv/bin:$PATH"
 WORKDIR /alvin-client
 
 # Copy project files
-COPY . /alvin-client
+COPY django /alvin-client
 
 # Install dependencies inside virtualenv
 RUN /venv/bin/pip install --upgrade pip && \
