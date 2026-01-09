@@ -34,7 +34,7 @@
   <name>Alvin client docker</name>
 
   <properties>
-    <exec-maven-plugin.version>3.6.2</exec-maven-plugin.version>
+    <exec-maven-plugin.version>3.6.3</exec-maven-plugin.version>
     <alvin-client.version>1.10.0</alvin-client.version>
 <!--    <docker.build.dir>${project.build.directory}/unpacked</docker.build.dir>-->
     <!-- Override property so docker-build profile activates in this module -->
