@@ -3,7 +3,7 @@ FROM python:3.13-slim
 
 # Install Apache and mod_wsgi
 RUN apt-get update && \
-    apt-get install -y apache2 libapache2-mod-wsgi-py3 && \
+    apt-get install -y apache2 libapache2-mod-wsgi-py3 nano less && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
